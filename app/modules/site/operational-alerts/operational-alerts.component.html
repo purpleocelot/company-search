@@ -1,0 +1,48 @@
+<loxam-page-control
+  [title]="'Operational Alerts'"
+  [showSlider]="anyLowBatteryData || anyMultiLoginData"
+  (dateChanged)="refreshDateDependentData($event)"
+></loxam-page-control>
+
+<div class="flex-container margin-bottom">
+  <div class="flex-item">
+    <loxam-no-data-card
+      [showBadge]="true"
+      [title]="'Low Battery'"
+      *ngIf="!anyLowBatteryData"
+    >
+    </loxam-no-data-card>
+
+    <loxam-low-battery-table-panel
+      *ngIf="anyLowBatteryData"
+      [lowBatteries]="filteredLowBatteryAlerts"
+      class=""
+    ></loxam-low-battery-table-panel>
+
+    <loxam-static-chart
+      *ngIf="anyLowBatteryData"
+      [chartTitle]="'Low Battery'"
+      [events]="filteredLowBatteryChart"
+    ></loxam-static-chart>
+  </div>
+
+  <div class="flex-item">
+    <loxam-no-data-card
+      [showBadge]="true"
+      [title]="'Mulit Logins'"
+      *ngIf="!anyMultiLoginData"
+    >
+    </loxam-no-data-card>
+
+    <loxam-multi-login-table-panel
+      *ngIf="anyMultiLoginData"
+      [multiLogins]="filteredMultiLoginAlerts"
+    ></loxam-multi-login-table-panel>
+
+    <loxam-static-chart
+      *ngIf="anyMultiLoginData"
+      [chartTitle]="'Multi Logins'"
+      [events]="filteredMultiLoginChart"
+    ></loxam-static-chart>
+  </div>
+</div>

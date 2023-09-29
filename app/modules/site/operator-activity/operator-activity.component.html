@@ -1,0 +1,138 @@
+<loxam-page-control
+  title="Operator Activity"
+  (dateChanged)="calculateOperatorTotals($event)"
+></loxam-page-control>
+<mat-card class="margin-bottom">
+  <mat-card-header class="full-width">
+    <mat-card-title class="full-width">
+      <loxam-header-with-filter
+        [dataSource]="dataSource"
+        [placeholderText]="'Filter by Operator'"
+        (filterApplied)="applyFilter($event)"
+      >
+        {{ "Usage Record" | translate }}
+      </loxam-header-with-filter>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="padding">
+    <span *ngIf="!(dataSource.data.length > 0)" class="no-data-text">
+      {{ "No operators found" | translate }}
+    </span>
+    <table
+      style="flex:1 1 0;"
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      *ngIf="dataSource.data.length > 0"
+    >
+      <!-- Operator -->
+      <ng-container matColumnDef="operatorName">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="min-width: 200px"
+        >
+          {{ "Operator" | translate }}
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="min-width: 200px"
+          class="clickable"
+        >
+          {{ element?.operatorName }}
+        </td>
+      </ng-container>
+
+      <!-- Contractor -->
+      <ng-container matColumnDef="companyName">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="min-width: 100px"
+        >
+          {{ "Contractor" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element" style="min-width: 100px">
+          {{ element?.companyName }}
+        </td>
+      </ng-container>
+
+      <!-- Most Recent Login -->
+      <ng-container matColumnDef="mostRecentLogin">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Most Recent Login" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.mostRecentLogin | loxamDate: "shortDate" | unknownDate }}
+        </td>
+      </ng-container>
+
+      <!-- Last MEWP Used -->
+      <ng-container matColumnDef="lastMewpUsed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Last MEWP Used" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element?.lastMewpUsed }}</td>
+      </ng-container>
+
+      <!-- Hours -->
+      <ng-container matColumnDef="usage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Hours" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.usage | minutesToHoursAndMinutes }}
+        </td>
+      </ng-container>
+
+      <!-- Safety -->
+      <ng-container matColumnDef="skySirenAlertCount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Safety" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.skySirenAlertCount | replaceZeroWithDash }}
+        </td>
+      </ng-container>
+
+      <!-- Multi Logins -->
+      <ng-container matColumnDef="multiLoginCount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Multi Logins" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.multiLoginCount | replaceZeroWithDash }}
+        </td>
+      </ng-container>
+
+      <!-- Unsecured -->
+      <ng-container matColumnDef="unsecuredMachineCount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Unsecured" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.unsecuredMachineCount | replaceZeroWithDash }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        routerLink="../operator-detail/{{ row.operatorKey }}"
+        class="pointer"
+      ></tr>
+    </table>
+
+    <mat-paginator
+      *ngIf="dataSource.data.length > 0"
+      class="margin-bottom"
+      [pageSizeOptions]="paginatorPageSizeOptions"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>

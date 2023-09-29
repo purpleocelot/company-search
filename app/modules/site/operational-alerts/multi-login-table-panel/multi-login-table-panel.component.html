@@ -1,0 +1,61 @@
+<mat-card class="margin-bottom">
+  <mat-card-header>
+    <mat-card-title>
+      <span class="badge" matBadge="{{ dataSource.data.length }}"></span>
+      {{ "Muliple Logins" | translate }}
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="padding">
+    <span *ngIf="!(dataSource.data.length > 0)" class="no-data-text">
+      {{ "No data for this period" | translate }}
+    </span>
+    <table
+      mat-table
+      matSort
+      [dataSource]="dataSource"
+      *ngIf="dataSource.data.length > 0"
+    >
+      <ng-container matColumnDef="eventDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Date" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let data">
+          {{ data?.eventDate | loxamDate: "shortDate" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="operatorName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Operator" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let data" class="clickable">
+          {{ data?.operatorName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="countOfMachineMultipleLogins">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Multi Logins" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let data">
+          {{ data?.countOfMachineMultipleLogins | replaceZeroWithDash }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr
+        mat-row
+        routerLink="../operator-detail/{{ myRowData.operatorKey }}"
+        *matRowDef="let myRowData; columns: columnsToDisplay"
+      ></tr>
+    </table>
+
+    <mat-paginator
+      *ngIf="dataSource.data.length > 0"
+      [length]="dataSource.data.length"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+    >
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>

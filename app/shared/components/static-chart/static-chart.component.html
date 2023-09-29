@@ -1,0 +1,38 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title> {{ chartTitle | translate }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="padding">
+    <span *ngIf="!(aggregatedValue > 0)" class="no-data-text">
+      {{ "No data for this period" | translate }}
+    </span>
+    <kendo-chart
+      *ngIf="aggregatedValue > 0"
+      [categoryAxis]="{
+        categories: categories,
+        type: 'date',
+        labels: {
+          dateFormats: {
+            days: getDateFormat()
+          },
+          rotation: -45
+        }
+      }"
+      [valueAxis]="{
+        majorUnit: 1
+      }"
+      [seriesColors]="[barColour]"
+    >
+      <kendo-chart-series>
+        <kendo-chart-series-item
+          class="kendo-chart-bar"
+          type="column"
+          [data]="events"
+          field="preFullValue"
+        >
+          <kendo-chart-tooltip format="{0}"></kendo-chart-tooltip>
+        </kendo-chart-series-item>
+      </kendo-chart-series>
+    </kendo-chart>
+  </mat-card-content>
+</mat-card>

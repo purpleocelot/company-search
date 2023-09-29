@@ -1,0 +1,52 @@
+<div>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    *ngIf="dataSource.data.length > 0"
+    class="full-width"
+  >
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ "Username" | translate }}
+      </th>
+      <td mat-cell *matCellDef="let data" class="clickable">
+        {{ data?.username
+        }}<span *ngIf="!data?.username">{{
+          "Users Not Logged In" | translate
+        }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastAccessedDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ "Last Accessed Date" | translate }}
+      </th>
+      <td mat-cell *matCellDef="let data">
+        {{ data?.lastAccessedDate | loxamDate: "longDateTime" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalPagesAccessed">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ "Total Pages Accessed" | translate }}
+      </th>
+      <td mat-cell *matCellDef="let data">{{ data?.totalPagesAccessed }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr
+      mat-row
+      (click)="selectSummary(myRowData)"
+      *matRowDef="let myRowData; columns: columnsToDisplay"
+      class="pointer"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    *ngIf="dataSource.data.length > 0"
+    [pageSize]="50"
+    [pageSizeOptions]="[50, 100, 200]"
+  >
+  </mat-paginator>
+</div>

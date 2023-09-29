@@ -1,0 +1,92 @@
+<mat-card class="margin-bottom">
+  <mat-card-header>
+    <mat-card-title>
+      <loxam-header-with-filter
+        [dataSource]="dataSource"
+        (filterApplied)="applyFilter($event)"
+      >
+        {{ "Site List" | translate }}
+      </loxam-header-with-filter>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="padding">
+    <span *ngIf="!(dataSource.data.length > 0)" class="no-data-text">
+      {{ "No sites found" | translate }}
+    </span>
+    <table
+      mat-table
+      class="full-width"
+      [dataSource]="dataSource"
+      matSort
+      *ngIf="dataSource.data.length > 0"
+    >
+      <ng-container matColumnDef="siteName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Site Name" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let data">{{ data?.siteName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="isActive">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Active" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let data">
+          <mat-icon *ngIf="data.isActive" class="active">check</mat-icon>
+          <mat-icon *ngIf="!data.isActive" class="inactive">clear</mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="siteStartDayTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Start Time" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let data">
+          {{ data?.siteStartDayTime | replaceZeroWithDash }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="siteEndDayTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "End Time" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let data">
+          {{ data?.siteEndDayTime | replaceZeroWithDash }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="control">
+        <th mat-header-cell *matHeaderCellDef class="right">
+          <button
+            mat-flat-button
+            type="button"
+            color="primary"
+            (click)="addSite()"
+          >
+            {{ "Add" | translate }}
+          </button>
+        </th>
+        <td mat-cell *matCellDef="let data" class="right">
+          <button
+            mat-flat-button
+            type="button"
+            color="accent"
+            (click)="editSite(data)"
+          >
+            {{ "Edit" | translate }}
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+    </table>
+
+    <mat-paginator
+      *ngIf="dataSource.data.length > 0"
+      [pageSize]="50"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+    >
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>

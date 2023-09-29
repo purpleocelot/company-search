@@ -1,0 +1,10 @@
+<loxam-page-control
+  [title]="'All Sites Map'"
+  [showSlider]="false"
+></loxam-page-control>
+<loxam-map
+  class="inline-block full-width"
+  [locations]="allMachineLocations"
+  *ngIf="allMachineLocations"
+  [allowNoSiteLink]="true"
+></loxam-map>

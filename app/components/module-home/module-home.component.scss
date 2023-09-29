@@ -1,0 +1,50 @@
+@import "../../../styles/variables.scss";
+
+mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem 1.6rem 0 1.6rem;
+
+  &.ie11 {
+    padding-bottom: 0;
+  }
+}
+
+.sidenav {
+  &-container {
+    position: absolute;
+    top: 6.4rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #eee;
+    padding-bottom: 1.6rem;
+
+    mat-sidenav {
+      min-width: 25rem;
+      padding-bottom: 2rem;
+    }
+  }
+}
+
+h3 {
+  padding-left: 1.6rem;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.side-toggle {
+  width: 30px;
+  position: absolute;
+  top: 0.1rem;
+  right: 0;
+  margin: 1.6rem;
+  cursor: pointer;
+}
+
+.side-toggle-icon {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.active {
+  background: #e1e1e1;
+}

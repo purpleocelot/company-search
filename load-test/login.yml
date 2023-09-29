@@ -1,0 +1,18 @@
+config:
+  target: "https://neu-api-qa-iot.azurewebsites.net/"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+  defaults:
+    headers:
+      Access-Control-Allow-Origin: "*"
+      cache-control: "no-cache"
+scenarios:
+  - flow:
+    - post:
+        url: "/Token"
+        body: "grant_type=password&username=mark.starr%40lavendongroup.com&password=12345%25Abcde"
+        capture:
+          json: "$.access_token"
+          as: "token"
+    - log: "{{ token }}"

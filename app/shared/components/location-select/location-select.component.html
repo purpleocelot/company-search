@@ -1,0 +1,47 @@
+<form class="margin-y">
+  <mat-form-field class="full-width half-width-left">
+    <input
+      matInput
+      placeholder="{{ 'Postcode' | translate }}"
+      id="postcode"
+      name="postcode"
+      [(ngModel)]="postcode"
+      required
+      type="text"
+    />
+    <mat-error>{{ "The postcode is required" | translate }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width margin-y">
+    <mat-select
+      placeholder="{{ 'Country' | translate }}"
+      [(ngModel)]="country"
+      name="country"
+      required
+      type="text"
+    >
+      <mat-option *ngFor="let countryItem of countries" [value]="countryItem">
+        {{ countryItem.name }}
+      </mat-option>
+    </mat-select>
+    <mat-error>{{
+      "Country is required to find a site. The world is a big place after all."
+        | translate
+    }}</mat-error>
+  </mat-form-field>
+
+  <button
+    mat-flat-button
+    color="accent"
+    type="button"
+    (click)="getLocation()"
+    [disabled]="loading"
+    class="float-right"
+  >
+    <span class="inline-block" [ngClass]="{ 'margin-right': loading }">
+      Get Location
+    </span>
+    <mat-spinner *ngIf="loading" diameter="20" class="inline-block">
+    </mat-spinner>
+  </button>
+</form>

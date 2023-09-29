@@ -1,0 +1,121 @@
+<mat-toolbar color="accent">
+  <mat-toolbar-row>
+    <span class="company-name"> <span class="logo"></span> </span>
+    <span class="pointer menu-button">
+      <mat-icon
+        *ngIf="!menuOpen && !showModuleSelector"
+        (click)="openMenu()"
+        class="padding"
+        >menu</mat-icon
+      >
+    </span>
+
+    <span class="toolbar-spacer"></span>
+
+    <span class="toolbar-spacer"></span>
+
+    <mat-icon
+      class="toolbar-icon"
+      matTooltip="{{ 'Select a module' | translate }}"
+      [matMenuTriggerFor]="module"
+      >apps</mat-icon
+    >
+    <mat-menu #module="matMenu">
+      <button
+        mat-menu-item
+        [routerLink]="['/site']"
+        routerLinkActive="router-link-active"
+      >
+        <mat-icon>location_on</mat-icon>
+        <span>{{ "Site Dashboard" | translate }}</span>
+      </button>
+      <button
+        *ngIf="userSettings.isAdmin"
+        mat-menu-item
+        [routerLink]="['/admin']"
+        routerLinkActive="router-link-active"
+      >
+        <mat-icon>supervisor_account</mat-icon>
+        <span>{{ "Admin" | translate }}</span>
+      </button>
+
+      <hr class="menu-divider" />
+
+      <button
+        mat-menu-item
+        [routerLink]="['/help']"
+        routerLinkActive="router-link-active"
+      >
+        <mat-icon>help</mat-icon>
+        <span>{{ "Help" | translate }}</span>
+      </button>
+    </mat-menu>
+    <mat-icon
+      class="toolbar-icon"
+      matTooltip="{{ 'User' | translate }}"
+      [matMenuTriggerFor]="menu"
+      >account_circle</mat-icon
+    >
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item disabled>
+        <mat-icon>account_circle</mat-icon>
+        <span>{{ userName() }}</span>
+      </button>
+      <button mat-menu-item [matMenuTriggerFor]="languagesMenu">
+        <mat-icon>translate</mat-icon>
+        <span>{{ "Select Language" | translate }}</span>
+      </button>
+      <button
+        mat-menu-item
+        [matMenuTriggerFor]="companiesMenu"
+        *ngIf="enableCompanyChange"
+      >
+        <mat-icon>location_city</mat-icon>
+        <span>{{ "Select Company" | translate }}</span>
+      </button>
+      <button mat-menu-item [routerLink]="'/account/change-password'">
+        <mat-icon>vpn_key</mat-icon>
+        <span>{{ "Change Password" | translate }}</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>{{ "Sign Out" | translate }}</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-menu #languagesMenu="matMenu">
+  <button
+    mat-menu-item
+    *ngFor="let language of languages"
+    (click)="selectLanguage(language)"
+  >
+    <mat-icon>language</mat-icon>
+    <span *ngIf="language">
+      {{ language.name }}
+      <mat-icon class="margin-left" *ngIf="isSelectedLanguage(language)"
+        >check</mat-icon
+      >
+    </span>
+  </button>
+</mat-menu>
+
+<mat-menu #companiesMenu="matMenu">
+  <button
+    mat-menu-item
+    *ngFor="let company of companies"
+    (click)="selectCompany(company)"
+  >
+    <mat-icon>business</mat-icon>
+    <span *ngIf="company">
+      {{ company.companyName }}
+      <mat-icon class="margin-left" *ngIf="isSelectedCompany(company)"
+        >check</mat-icon
+      >
+    </span>
+  </button>
+</mat-menu>
+
+<router-outlet></router-outlet>
+<loxam-loader></loxam-loader>

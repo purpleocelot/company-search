@@ -1,0 +1,113 @@
+////////////////////////////////////////////////////
+// custom loxam theme using the brands red and blue
+//
+// colors used for the theme are:
+// primary - red = #ce122d
+// secondary - blue = #044c7e
+////////////////////////////////////////////////////
+@import "~@angular/material/theming";
+
+$loxam-red: (
+  50: #f9e3e6,
+  100: #f0b8c0,
+  200: #e78996,
+  300: #dd596c,
+  400: #d5364d,
+  500: #ce122d,
+  600: #c91028,
+  700: #c20d22,
+  800: #bc0a1c,
+  900: #b00511,
+  A100: #ffdbdc,
+  A200: #ffa8ab,
+  A400: #ff7579,
+  A700: #ff5b61,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
+);
+$loxam-blue: (
+  50: #e1eaf0,
+  100: #b4c9d8,
+  200: #82a6bf,
+  300: #4f82a5,
+  400: #2a6791,
+  500: #044c7e,
+  600: #034576,
+  700: #033c6b,
+  800: #023361,
+  900: #01244e,
+  A100: #81aeff,
+  A200: #4e8dff,
+  A400: #1b6cff,
+  A700: #025cff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #ffffff,
+    A700: #ffffff
+  )
+);
+$loxam-yellow: (
+  50: #fffbea,
+  100: #fff4c4,
+  200: #fdeda3,
+  300: #f8e385,
+  400: #ffdd43,
+  500: #f8cb00,
+  600: #e6bb00,
+  700: #ad8e01,
+  800: #917601,
+  900: #5f4e00,
+  A100: #fff4c4,
+  A200: #fdeda3,
+  A400: #ffdd43,
+  A700: #ad8e01,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
+);
+@include mat-core();
+@import "loxam-theme.scss";
+@import "nationwide-theme.scss";
+@import "rapid-theme.scss";
+// remove additional padding when form field appearince is set to outline
+.mat-form-field-infix {
+  padding: 0 0 0.8rem 0 !important;
+}

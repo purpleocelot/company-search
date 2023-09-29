@@ -1,0 +1,351 @@
+<loxam-page-control
+  [title]="'Machine Inventory'"
+  [showSlider]="false"
+></loxam-page-control>
+<div class="margin-top padding-bottom">
+  <mat-accordion multi="true">
+    <!-- booms -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <span
+          class="according-badge"
+          matBadge="{{ machines[boomsArrayPosition].list.data.length }}"
+          matBadgeColor="accent"
+        >
+        </span>
+        {{ machines[boomsArrayPosition].title | translate }}
+      </mat-expansion-panel-header>
+      <span
+        *ngIf="!(machines[boomsArrayPosition].list.data.length > 0)"
+        class="no-data-text"
+      >
+        {{ "No machines of this type" | translate }}
+      </span>
+
+      <table
+        mat-table
+        [dataSource]="machines[boomsArrayPosition].list"
+        #sortForBooms="matSort"
+        matSort
+        *ngIf="machines[boomsArrayPosition].list.data.length > 0"
+      >
+        <!-- eCode -->
+        <ng-container matColumnDef="eCode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "E-Code" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element" class="clickable">
+            {{ element.eCode }}
+          </td>
+        </ng-container>
+
+        <!-- machine -->
+        <ng-container matColumnDef="machine">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Machine" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.itemDescription }}
+          </td>
+        </ng-container>
+
+        <!-- power -->
+        <ng-container matColumnDef="power">
+          <th mat-header-cell *matHeaderCellDef>{{ "Power" | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.itemPower }}</td>
+        </ng-container>
+
+        <!-- device id -->
+        <ng-container matColumnDef="deviceId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Device ID" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.blackBoxRefNumber }}
+          </td>
+        </ng-container>
+
+        <!-- contractor -->
+        <ng-container matColumnDef="contractor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Contractor" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.accountName }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          routerLink="../machine-detail/{{ row.machineKey }}"
+          class="pointer"
+        ></tr>
+      </table>
+
+      <mat-paginator
+        *ngIf="machines[boomsArrayPosition].list.data.length > 0"
+        #paginatorBooms
+        [pageSizeOptions]="paginatorPageSizeOptions"
+        showFirstLastButtons
+      ></mat-paginator>
+    </mat-expansion-panel>
+
+    <!-- scissors -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <span
+          class="according-badge"
+          matBadge="{{ machines[scissorsArrayPosition].list.data.length }}"
+          matBadgeColor="accent"
+        >
+        </span>
+        {{ machines[scissorsArrayPosition].title | translate }}
+      </mat-expansion-panel-header>
+      <span
+        *ngIf="!(machines[scissorsArrayPosition].list.data.length > 0)"
+        class="no-data-text"
+      >
+        {{ "No machines of this type" | translate }}
+      </span>
+
+      <table
+        mat-table
+        [dataSource]="machines[scissorsArrayPosition].list"
+        #sortForScissors="matSort"
+        matSort
+        *ngIf="machines[scissorsArrayPosition].list.data.length > 0"
+      >
+        <!-- eCode -->
+        <ng-container matColumnDef="eCode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "E-Code" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element" class="clickable">
+            {{ element.eCode }}
+          </td>
+        </ng-container>
+
+        <!-- machine -->
+        <ng-container matColumnDef="machine">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Machine" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.itemDescription }}
+          </td>
+        </ng-container>
+
+        <!-- power -->
+        <ng-container matColumnDef="power">
+          <th mat-header-cell *matHeaderCellDef>{{ "Power" | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.itemPower }}</td>
+        </ng-container>
+
+        <!-- device id -->
+        <ng-container matColumnDef="deviceId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Device ID" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.blackBoxRefNumber }}
+          </td>
+        </ng-container>
+
+        <!-- contractor -->
+        <ng-container matColumnDef="contractor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Contractor" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.accountName }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          routerLink="../machine-detail/{{ row.machineKey }}"
+          class="pointer"
+        ></tr>
+      </table>
+
+      <mat-paginator
+        *ngIf="machines[scissorsArrayPosition].list.data.length > 0"
+        #paginatorScissors
+        [pageSizeOptions]="paginatorPageSizeOptions"
+        showFirstLastButtons
+      ></mat-paginator>
+    </mat-expansion-panel>
+
+    <!-- others -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <span
+          class="according-badge"
+          matBadge="{{ machines[othersArrayPosition].list.data.length }}"
+          matBadgeColor="accent"
+        >
+        </span>
+        {{ machines[othersArrayPosition].title | translate }}
+      </mat-expansion-panel-header>
+      <span
+        *ngIf="!(machines[othersArrayPosition].list.data.length > 0)"
+        class="no-data-text"
+      >
+        {{ "No machines of this type" | translate }}
+      </span>
+
+      <table
+        mat-table
+        [dataSource]="machines[othersArrayPosition].list"
+        #sortForOthers="matSort"
+        matSort
+        *ngIf="machines[othersArrayPosition].list.data.length > 0"
+      >
+        <!-- eCode -->
+        <ng-container matColumnDef="eCode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "E-Code" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element" class="clickable">
+            {{ element.eCode }}
+          </td>
+        </ng-container>
+
+        <!-- machine -->
+        <ng-container matColumnDef="machine">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Machine" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.itemDescription }}
+          </td>
+        </ng-container>
+
+        <!-- power -->
+        <ng-container matColumnDef="power">
+          <th mat-header-cell *matHeaderCellDef>{{ "Power" | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.itemPower }}</td>
+        </ng-container>
+
+        <!-- device id -->
+        <ng-container matColumnDef="deviceId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Device ID" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.blackBoxRefNumber }}
+          </td>
+        </ng-container>
+
+        <!-- contractor -->
+        <ng-container matColumnDef="contractor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Contractor" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.accountName }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          routerLink="../machine-detail/{{ row.machineKey }}"
+          class="pointer"
+        ></tr>
+      </table>
+
+      <mat-paginator
+        *ngIf="machines[othersArrayPosition].list.data.length > 0"
+        #paginatorOthers
+        [pageSizeOptions]="paginatorPageSizeOptions"
+        showFirstLastButtons
+      ></mat-paginator>
+    </mat-expansion-panel>
+
+    <!-- untracked -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <span
+          class="according-badge"
+          matBadge="{{ machines[untrackedArrayPosition].list.data.length }}"
+          matBadgeColor="accent"
+        >
+        </span>
+        {{ machines[untrackedArrayPosition].title | translate }}
+      </mat-expansion-panel-header>
+      <span
+        *ngIf="!(machines[untrackedArrayPosition].list.data.length > 0)"
+        class="no-data-text"
+      >
+        {{ "No machines of this type" | translate }}
+      </span>
+
+      <table
+        mat-table
+        [dataSource]="machines[untrackedArrayPosition].list"
+        #sortForUntracked="matSort"
+        matSort
+        *ngIf="machines[untrackedArrayPosition].list.data.length > 0"
+      >
+        <!-- eCode -->
+        <ng-container matColumnDef="eCode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "E-Code" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element" class="clickable">
+            {{ element.eCode }}
+          </td>
+        </ng-container>
+
+        <!-- machine -->
+        <ng-container matColumnDef="machine">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Machine" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.itemDescription }}
+          </td>
+        </ng-container>
+
+        <!-- power -->
+        <ng-container matColumnDef="power">
+          <th mat-header-cell *matHeaderCellDef>{{ "Power" | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.itemPower }}</td>
+        </ng-container>
+
+        <!-- device id -->
+        <ng-container matColumnDef="deviceId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Device ID" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.blackBoxRefNumber }}
+          </td>
+        </ng-container>
+
+        <!-- contractor -->
+        <ng-container matColumnDef="contractor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Contractor" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.accountName }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          routerLink="../machine-detail/{{ row.machineKey }}"
+          class="pointer"
+        ></tr>
+      </table>
+
+      <mat-paginator
+        *ngIf="machines[untrackedArrayPosition].list.data.length > 0"
+        #paginatorUntracked
+        [pageSizeOptions]="paginatorPageSizeOptions"
+        showFirstLastButtons
+      ></mat-paginator>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Loxam IoT Dashboard</title>
+    <base href="/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link id="site-favicon" rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script type="text/javascript" src="assets/polyfills/classlist.js"></script>
+    <script type="text/javascript">
+      window["loxam"] = {
+        isIE11: !!window.MSInputMethodContext && !!document.documentMode
+      };
+    </script>
+    <!-- Google Analytics -->
+    <script>
+      (function(i, s, o, g, r, a, m) {
+        i["GoogleAnalyticsObject"] = r;
+        (i[r] =
+          i[r] ||
+          function() {
+            (i[r].q = i[r].q || []).push(arguments);
+          }),
+          (i[r].l = 1 * new Date());
+        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m);
+      })(
+        window,
+        document,
+        "script",
+        "https://www.google-analytics.com/analytics.js",
+        "ga"
+      );
+      ga("create", "UA-6345280-4", "auto");
+    </script>
+    <!-- End Google Analytics -->
+  </head>
+  <body style="overflow:hidden;">
+    <loxpad-root>
+      <style>
+        .wrapper {
+          background: rgba(255, 255, 255, 0.7);
+          position: absolute;
+          top: 6.4rem;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          z-index: 8999;
+        }
+
+        .spinner {
+          margin: 0 auto;
+        }
+
+        .center {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .loader {
+          display: inline-block;
+          font-size: 6rem; /* Change this to resize the loader */
+          animation: 2s rotate infinite linear;
+          width: 1em;
+          height: 1em;
+        }
+
+        .loader circle {
+          fill: transparent;
+          stroke-width: 10%;
+          stroke-dasharray: 2.3525em 0.4705em;
+          animation: 1.3s strokeDashArray infinite linear, 24s infinite linear;
+        }
+
+        .ie {
+          padding-right: calc(50% - 3rem);
+        }
+
+        .nationwide {
+          stroke: #f8cb00;
+        }
+
+        .rapid {
+          stroke: #044c7e;
+        }
+
+        .loxam {
+          stroke: #ce122d;
+        }
+
+        @keyframes rotate {
+          from {
+            transform: rotate(0deg);
+          }
+
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        @keyframes strokeDashArray {
+          from {
+            stroke-dasharray: 2.3525em 0.4705em;
+            stroke-dashoffset: 0;
+          }
+
+          10% {
+            stroke-dasharray: 2.3525em 0.4705em;
+            stroke-dashoffset: 0;
+          }
+
+          50% {
+            stroke-dasharray: 0.001em 2.825em;
+            stroke-dashoffset: -2.826em;
+          }
+
+          60% {
+            stroke-dasharray: 0.001em 2.825em;
+          }
+
+          to {
+            stroke-dasharray: 2.3525em 0.4705em;
+            stroke-dashoffset: -2.826em;
+          }
+        }
+      </style>
+      <div id="app-loading-spinner" class="wrapper center">
+        <div class="loader spinner" style="font-size:6rem;">
+          <svg width="6rem" height="6rem">
+            <circle
+              id="loader-circle"
+              cx="0.5em"
+              cy="0.5em"
+              r="0.45em"
+            ></circle>
+          </svg>
+        </div>
+      </div>
+      <script type="text/javascript">
+        if (window["loxam"].isIE11) {
+          document.getElementById("app-loading-spinner").classList.add("ie");
+        }
+
+        if (window.location.href.indexOf("loxam-access") >= 0) {
+          document.getElementById("loader-circle").classList.add("loxam");
+        } else if (window.location.href.indexOf("rapidaccess-gulf") >= 0) {
+          document.getElementById("loader-circle").classList.add("rapid");
+        } else {
+          document.getElementById("loader-circle").classList.add("nationwide");
+        }
+      </script>
+    </loxpad-root>
+  </body>
+</html>

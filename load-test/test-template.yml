@@ -1,0 +1,204 @@
+config:
+  target: "https://neu-api-qa-iot.azurewebsites.net/"
+  phases:
+    - duration: 20
+      arrivalRate: 40
+  defaults:
+    headers:
+      Access-Control-Allow-Origin: "*"
+      cache-control: "no-cache"
+      Authorization: "Bearer TOKEN_PLACEHOLDER"
+  variables:
+    siteId:
+      - "1"
+    status:
+      - "OK"
+  processor: "./sites-function.js"
+scenarios:
+
+  - name: "has-multiple-sites"
+    flow:
+    - get:
+        url: "/api/site/has-multiple-sites"
+        afterResponse: "statusCheck"
+    - log: "SiteID: NA, has-multiple-sites - {{ status }}"
+
+  - name: "summary"
+    flow:
+    - get:
+        url: "/api/site/summary"
+        afterResponse: "statusCheck"
+    - log: "SiteID: NA, summary - {{ status }}"
+
+  - name: "site summary"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/site/{{ siteId }}/summary"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, site summary - {{ status }}"
+
+  - name: "safety-alerts"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/machines/{{ siteId }}/safety-alerts"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, safety-alerts - {{ status }}"
+
+  - name: "safety-alerts-chart"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/machines/{{ siteId }}/safety-alerts-chart"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, safety-alerts-chart - {{ status }}"
+
+  - name: "operational-low-battery"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/machines/{{ siteId }}/operational-low-battery"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, operational-low-battery - {{ status }}"
+
+  - name: "operational-low-battery-chart"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/machines/{{ siteId }}/operational-low-battery-chart"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, operational-low-battery-chart - {{ status }}"
+
+  - name: "operational-multi-login"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/machines/{{ siteId }}/operational-multi-login"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, operational-multi-login - {{ status }}"
+
+  - name: "operational-multi-login-chart"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/machines/{{ siteId }}/operational-multi-login-chart"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, operational-multi-login-chart - {{ status }}"
+
+  - name: "operational-unsecured"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/machines/{{ siteId }}/operational-unsecured"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, operational-unsecured - {{ status }}"
+
+  - name: "operational-unsecured-chart"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/machines/{{ siteId }}/operational-unsecured-chart"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, operational-unsecured-chart - {{ status }}"
+
+  - name: "boom"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/machines/{{ siteId }}/boom"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, boom - {{ status }}"
+
+  - name: "scissor"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/machines/{{ siteId }}/scissor"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, scissor - {{ status }}"
+
+  - name: "other"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/machines/{{ siteId }}/other"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, other - {{ status }}"
+
+  - name: "untracked"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/machines/{{ siteId }}/untracked"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, untracked - {{ status }}"
+
+  - name: "operations"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/machines/{{ siteId }}/operations"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, operations - {{ status }}"
+
+  - name: "operators"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/operators/{{ siteId }}"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, operators - {{ status }}"
+
+  - name: "all/utilisation-by-category"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/utilisation/{{ siteId }}/all/utilisation-by-category"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, all/utilisation-by-category - {{ status }}"
+
+  - name: "other/utilisation-by-category"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/utilisation/{{ siteId }}/other/utilisation-by-category"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, other/utilisation-by-category - {{ status }}"
+
+  - name: "boom/utilisation-by-category"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/utilisation/{{ siteId }}/boom/utilisation-by-category"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, boom/utilisation-by-category - {{ status }}"
+
+  - name: "scissor/utilisation-by-category"
+    flow:
+    - function: "getSiteId"
+    - get:
+        url: "/api/utilisation/{{ siteId }}/scissor/utilisation-by-category"
+        afterResponse: "statusCheck"
+    - log: "SiteID: {{ siteId }}, scissor/utilisation-by-category - {{ status }}"
+
+  - name: "RegisteredUsers"
+    flow:
+    - get:
+        url: "/api/Account/RegisteredUsers"
+        afterResponse: "statusCheck"
+    - log: "SiteID: NA, RegisteredUsers - {{ status }}"
+
+  - name: "locations"
+    flow:
+    - get:
+        url: "/api/admin/targa/locations"
+        afterResponse: "statusCheck"
+    - log: "SiteID: NA, locations - {{ status }}"
+
+  - name: "machines"
+    flow:
+    - get:
+        url: "/api/machines"
+        afterResponse: "statusCheck"
+    - log: "SiteID: NA, machines - {{ status }}"

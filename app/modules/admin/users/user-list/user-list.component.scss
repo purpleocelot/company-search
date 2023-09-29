@@ -1,0 +1,18 @@
+.mat-card-header .mat-card-title {
+  margin-bottom: 0;
+}
+
+.admin {
+  color: green;
+  font-weight: bolder;
+}
+
+.not-admin {
+  color: darkgray;
+}
+
+.disabled {
+  font-style: italic;
+  text-decoration: line-through;
+  color: tomato;
+}

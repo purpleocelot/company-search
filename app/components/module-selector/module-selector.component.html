@@ -1,0 +1,17 @@
+<div class="container">
+  <mat-grid-list
+    cols="{{ cols }}"
+    rowHeight="2:2"
+    gutterSize="16px"
+    (window:resize)="onResize($event)"
+  >
+    <mat-grid-tile
+      class="tile"
+      *ngFor="let item of moduleLinks"
+      [routerLink]="item.routeLink"
+      (click)="itemClickedEvent()"
+    >
+      {{ item.title | translate }}
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

@@ -1,0 +1,18 @@
+.map {
+  width: 50%;
+  div {
+    agm-map {
+      width: 50% !important;
+      margin: 1.6rem;
+    }
+  }
+}
+
+.agm-map-container-inner {
+  width: 50% !important;
+  margin: 1.6rem;
+}
+
+loxam-map {
+  vertical-align: top;
+}

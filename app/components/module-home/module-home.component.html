@@ -1,0 +1,82 @@
+<mat-sidenav-container class="sidenav-container">
+  <!-- navigation with siteId prefixed to the link -->
+  <mat-sidenav *ngIf="useSiteIdForNavigation" mode="side" [(opened)]="menuOpen">
+    <div class="side-toggle" (click)="closeMenu()">
+      <mat-icon class="side-toggle-icon" matTooltip="Hide Menu"
+        >keyboard_arrow_left</mat-icon
+      >
+    </div>
+    <h3>{{ menuItems.title | translate }}</h3>
+    <div *ngIf="site && site.siteId">
+      <mat-nav-list dense *ngFor="let section of menuItems.sections">
+        <h3
+          matSubheader
+          *ngIf="section.route && !section.ignoreSiteIdInRouterLink"
+          [routerLink]="[site.siteId, section.route]"
+          class="pointer"
+        >
+          {{ section.title | translate }}
+        </h3>
+        <h3
+          matSubheader
+          *ngIf="
+            section.route &&
+            section.ignoreSiteIdInRouterLink &&
+            (section.title === 'All Sites' && hasMultipleSites)
+          "
+          [routerLink]="[section.route]"
+          class="pointer"
+        >
+          {{ section.title | translate }}
+        </h3>
+
+        <h3 matSubheader *ngIf="!section.route">
+          {{ section.title | translate }}
+        </h3>
+
+        <mat-list-item
+          *ngFor="let item of section.items"
+          [routerLink]="[site.siteId, item.route]"
+          routerLinkActive="active"
+          class="menu-item"
+        >
+          <h4 matLine class="padding-left">{{ item.title | translate }}</h4>
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+
+    <loxam-last-sync-datetime></loxam-last-sync-datetime>
+  </mat-sidenav>
+
+  <!-- navigation without site.siteId prefixed to the link -->
+  <mat-sidenav
+    *ngIf="!useSiteIdForNavigation"
+    mode="side"
+    [(opened)]="menuOpen"
+  >
+    <div class="side-toggle" (click)="closeMenu()">
+      <mat-icon class="side-toggle-icon">keyboard_arrow_left</mat-icon>
+    </div>
+    <h3 [routerLink]="[menuItems.route]" class="pointer">
+      {{ menuItems.title | translate }}
+    </h3>
+    <mat-nav-list dense *ngFor="let section of menuItems.sections">
+      <h3 matSubheader>{{ section.title | translate }}</h3>
+      <mat-list-item
+        *ngFor="let item of section.items"
+        [routerLink]="[item.route]"
+        routerLinkActive="active"
+        class="menu-item"
+      >
+        <h4 matLine class="padding-left">{{ item.title | translate }}</h4>
+      </mat-list-item>
+    </mat-nav-list>
+
+    <loxam-last-sync-datetime></loxam-last-sync-datetime>
+  </mat-sidenav>
+
+  <mat-sidenav-content [ngClass]="{ ie11: isIE11 }">
+    <div style="flex: 1;"><router-outlet></router-outlet></div>
+    <loxam-footer></loxam-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,19 @@
+<loxam-page-control
+  [title]="pageTitle"
+  [showSlider]="false"
+></loxam-page-control>
+
+<loxam-user-list
+  *ngIf="!selectedUser"
+  [users]="users"
+  [selectedUser]="selectedUser"
+  (editingUser)="editingUser($event)"
+  style="max-height: calc(100% - 100px)"
+></loxam-user-list>
+
+<loxam-user-add-update
+  *ngIf="selectedUser"
+  [selectedUser]="selectedUser"
+  [allSitesList]="sites"
+  (stopUserAddEdit)="userAddEditStop($event)"
+></loxam-user-add-update>

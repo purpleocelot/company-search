@@ -1,0 +1,66 @@
+<div class="dialog-container">
+  <div>
+    <h1 mat-dialog-title>
+      <span class="badge" matBadge="{{ machineDataSource.data.length }}"></span>
+      {{ config.title | translate }}
+    </h1>
+    <p>{{ config.message | translate }}</p>
+    <div mat-dialog-content>
+      <table
+        mat-table
+        #machinesTable="matTable"
+        [dataSource]="machineDataSource"
+        matSort
+        #machinesSort="matSort"
+        *ngIf="machineDataSource && machineDataSource.data.length > 0"
+        class="full-width"
+      >
+        <ng-container matColumnDef="ecode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "E-Code" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let data">{{ data?.ecode }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="itemDescription">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Description" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let data">{{ data?.itemDescription }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="itemCategory">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Category" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let data">{{ data?.itemCategory }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="itemPower">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "Power" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let data">{{ data?.itemPower }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="machineColumnsToDisplay"></tr>
+        <tr
+          mat-row
+          *matRowDef="let myRowData; columns: machineColumnsToDisplay"
+        ></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button
+    mat-flat-button
+    color="primary"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    type="button"
+  >
+    {{ "Close" | translate }}
+  </button>
+</div>

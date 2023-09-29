@@ -1,0 +1,11 @@
+<loxam-page-control
+  [title]="pageTitle"
+  [showSlider]="false"
+></loxam-page-control>
+<loxam-map
+  class="inline-block full-width"
+  [locations]="locations"
+  [clickable]="false"
+  [allowNoSiteLink]="false"
+  *ngIf="locations"
+></loxam-map>

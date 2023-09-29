@@ -1,0 +1,19 @@
+@import "../../../../styles/variables.scss";
+
+.page-control-container {
+  padding: 1.6rem;
+  margin-top: 1.6rem; /* 0 if not putting slider inside gray box */
+  border-radius: 4px;
+  background: rgba(176, 176, 176, 0.21);
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 1.6rem;
+  padding-bottom: 0.8rem; // there is already 0.8rem on the slider
+
+  .title {
+    padding: 0 1.6rem 0.8rem 1.6rem;
+    font-size: 2rem;
+    color: $grey;
+    display: block;
+  }
+}

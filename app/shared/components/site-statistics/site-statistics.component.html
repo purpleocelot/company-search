@@ -1,0 +1,95 @@
+<div class="title">
+  <span>{{ data?.siteName }}</span>
+</div>
+
+<div class="stats-panel">
+  <div class="group">
+    <div class="item">
+      <div class="item-title">{{ "Safety" | translate }}</div>
+      <div
+        class="item-value grid-text__danger pointer"
+        routerLink="safety-alerts"
+      >
+        {{ data?.siteAlertSummary?.skySirenAlertCount | replaceZeroWithDash }}
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-title">{{ "Operational" | translate }}</div>
+      <div
+        class="item-value grid-text__warning pointer"
+        routerLink="operational-alerts"
+      >
+        {{
+          (data?.machineSiteAlertSummaries)[0]?.lowBatteryMachineCount +
+            (data?.machineSiteAlertSummaries)[0]?.multiLoginCount
+            | replaceZeroWithDash
+        }}
+      </div>
+    </div>
+    <div class="item">
+      <div
+        class="item-title"
+        matTooltip="{{ 'Unsecured MEWPs from last night' | translate }}"
+      >
+        {{ "Unsecured" | translate }}
+      </div>
+      <div
+        class="item-value grid-text__warning pointer"
+        routerLink="unsecured-mewp-alerts"
+      >
+        {{
+          (data?.machineSiteAlertSummaries)[1]?.unsecuredMachineCount
+            | replaceZeroWithDash
+        }}
+      </div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="item">
+      <div class="item-title">{{ "MEWPs" | translate }}</div>
+      <div class="item-value pointer" routerLink="machines-inventory">
+        {{ data?.totalMachineCount | replaceZeroWithDash }}
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-title">{{ "Booms" | translate }}</div>
+      <div class="item-value pointer" routerLink="machines-inventory">
+        {{ data?.boomMachineCount | replaceZeroWithDash }}
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-title">{{ "Scissors" | translate }}</div>
+      <div class="item-value pointer" routerLink="machines-inventory">
+        {{ data?.scissorMachineCount | replaceZeroWithDash }}
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-title">{{ "Other" | translate }}</div>
+      <div class="item-value pointer" routerLink="machines-inventory">
+        {{ data?.otherMachineCount | replaceZeroWithDash }}
+      </div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="item">
+      <div class="item-title">{{ "Untracked" | translate }}</div>
+      <div class="item-value pointer" routerLink="machines-inventory">
+        {{ data?.untrackedMachineCount | replaceZeroWithDash }}
+      </div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="item">
+      <div class="item-title">{{ "Contractors" | translate }}</div>
+      <div class="item-value">
+        {{ data?.totalContractorCount | replaceZeroWithDash }}
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-title">{{ "Operators" | translate }}</div>
+      <div class="item-value pointer" routerLink="operator-activity">
+        {{ data?.totalOperatorCount | replaceZeroWithDash }}
+      </div>
+    </div>
+  </div>
+</div>

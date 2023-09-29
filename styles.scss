@@ -1,0 +1,293 @@
+@import "./styles/variables.scss";
+
+$one-unit: 1.6rem;
+$max-width: calc(50% - 0.8rem);
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+  font-size: 62.5%; /* 1rem = 10px */
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: $one-unit;
+}
+
+.input-form {
+  min-width: 150px;
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.half-width {
+  width: 50%;
+
+  &-left {
+    padding-right: 0.8rem;
+  }
+
+  &-right {
+    padding-left: 0.8rem;
+  }
+}
+
+.pointer {
+  cursor: pointer !important;
+}
+
+.float-right {
+  float: right;
+}
+
+.inline-block {
+  display: inline-block !important;
+}
+
+.block {
+  display: block !important;
+}
+
+.padding {
+  padding: $one-unit !important;
+}
+
+.padding-x {
+  padding-left: $one-unit !important;
+  padding-right: $one-unit !important;
+}
+
+.padding-y {
+  padding-top: $one-unit !important;
+  padding-bottom: $one-unit !important;
+}
+
+.padding-top {
+  padding-top: $one-unit !important;
+}
+
+.padding-right {
+  padding-right: $one-unit !important;
+}
+
+.padding-bottom {
+  padding-bottom: $one-unit !important;
+}
+
+.padding-left {
+  padding-left: $one-unit !important;
+}
+
+.margin-x {
+  margin-left: $one-unit !important;
+  margin-right: $one-unit !important;
+}
+
+.margin-y {
+  margin-top: $one-unit !important;
+  margin-bottom: $one-unit !important;
+}
+
+.margin {
+  margin: $one-unit !important;
+}
+
+.margin-right {
+  margin-right: $one-unit !important;
+}
+
+.margin-left {
+  margin-left: $one-unit !important;
+}
+
+.margin-top {
+  margin-top: $one-unit !important;
+}
+
+.margin-bottom {
+  margin-bottom: $one-unit !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.centered {
+  margin: 0 auto;
+}
+
+.white-spinner {
+  circle {
+    stroke: white !important;
+  }
+}
+
+.grid {
+  height: calc(100% - 100px);
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.grid-text__danger {
+  color: $status-text-danger !important;
+}
+
+.grid-text__warning {
+  color: $status-text-warning !important;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.flex-item {
+  min-width: 40rem;
+  max-width: $max-width;
+  width: 100%;
+}
+
+@media (min-width: 320px) and (max-width: 479px) {
+  .flex-container {
+    display: block;
+  }
+  .flex-item {
+    min-width: 30rem;
+    max-width: $max-width;
+    width: 100%;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .flex-container {
+    display: block;
+  }
+  .flex-item {
+    min-width: 30rem;
+    max-width: $max-width;
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 836px) {
+  .flex-container {
+    display: block;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .flex-item {
+    width: 100%;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1999px) {
+  .flex-item {
+    min-width: 45rem;
+    max-width: $max-width;
+    width: 100%;
+  }
+}
+
+.spacer {
+  display: block;
+  width: 100%;
+  height: $one-unit;
+}
+
+mat-card-header {
+  font-size: 2rem;
+}
+
+.mat-content {
+  overflow: visible !important;
+}
+
+/* remove any hover style from the header row of all mat tables */
+.mat-header-row:hover {
+  background: inherit !important;
+}
+
+.according-badge {
+  width: 3rem;
+  left: -24px;
+  top: 9px;
+}
+
+.badge {
+  display: inline-block;
+  width: 2rem;
+  left: -20px;
+  top: -6px;
+}
+
+.clickable {
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: $grey !important;
+  }
+}
+
+.date-slider {
+  width: 100%;
+}
+
+.company-name {
+  height: 5.8rem;
+  line-height: 5.8rem;
+
+  .logo {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background-size: contain;
+    background-repeat: no-repeat;
+    font-size: 2.5rem;
+    font-weight: 800;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.mat-card-header-text {
+  width: 100%;
+}
+
+.right {
+  text-align: right !important;
+}
+
+.left {
+  text-align: left !important;
+}
+
+.float-right {
+  float: right;
+}

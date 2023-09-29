@@ -1,0 +1,37 @@
+<loxam-page-control
+  (dateChanged)="refreshDateDependentData($event)"
+  [title]="pageTitle"
+  [showSlider]="tracked"
+  [alerts]="alerts"
+></loxam-page-control>
+
+<div class="flex-container">
+  <loxam-machine-detail-panel
+    [machineSummary]="machineSummary"
+    [ngClass]="{ 'full-width': !tracked, 'flex-item': tracked }"
+  ></loxam-machine-detail-panel>
+
+  <loxam-map
+    *ngIf="tracked"
+    class="map flex-item"
+    [locations]="machineLocation"
+    [clickable]="false"
+    [zoomOverride]="true"
+    [mapCenterLat]="defaultMapCenterLat"
+    [mapCenterLong]="defaultMapCenterLong"
+  ></loxam-map>
+
+  <loxam-machine-usage-panel
+    *ngIf="tracked"
+    [usage]="filteredUsage"
+    class="flex-item"
+  >
+  </loxam-machine-usage-panel>
+
+  <loxam-utilisation-chart
+    *ngIf="tracked"
+    class="flex-item"
+    [chartTitle]="'Machine Utilisation'"
+    [utilisationEvents]="filteredUtilisationEvents"
+  ></loxam-utilisation-chart>
+</div>

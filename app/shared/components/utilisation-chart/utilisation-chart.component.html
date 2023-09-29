@@ -1,0 +1,55 @@
+<mat-card class="margin-bottom">
+  <mat-card-header>
+    <mat-card-title> {{ chartTitle | translate }} </mat-card-title>
+    <mat-card-subtitle>
+      <span *ngIf="aggregatedPercentage > 0">
+        {{ aggregatedPercentage }}% ({{
+          aggregatedHours | minutesToHoursAndMinutes
+        }}
+        {{ "hrs" | translate }})
+      </span>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="padding">
+    <span *ngIf="!(aggregatedPercentage > 0)" class="no-data-text">
+      {{ "No data for this period" | translate }}
+    </span>
+    <kendo-chart
+      *ngIf="aggregatedPercentage > 0"
+      [categoryAxis]="{
+        categories: categories,
+        type: 'date',
+        labels: {
+          dateFormats: {
+            days: getDateFormat()
+          },
+          rotation: -45
+        }
+      }"
+      [seriesColors]="[barColour, overBarColour]"
+    >
+      <kendo-chart-series>
+        <kendo-chart-series-item
+          class="kendo-chart-bar"
+          type="column"
+          [data]="utilisationEvents"
+          [stack]="{ group: 'a' }"
+          field="preFullValue"
+        >
+          <kendo-chart-tooltip format="{0}%"></kendo-chart-tooltip>
+        </kendo-chart-series-item>
+        <kendo-chart-series-item
+          class="kendo-chart-over-utilisation-bar"
+          type="column"
+          [data]="utilisationEvents"
+          [stack]="{ group: 'a' }"
+          field="postFullValue"
+        >
+          <kendo-chart-tooltip
+            format="{0}% over full utilisation"
+          ></kendo-chart-tooltip>
+        </kendo-chart-series-item>
+      </kendo-chart-series>
+    </kendo-chart>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,490 @@
+<mat-card class="margin-bottom">
+  <mat-card-header>
+    <mat-card-title>
+      <span *ngIf="newSite"> {{ "Add Site" | translate }} </span>
+      <span *ngIf="!newSite">
+        {{ "Edit Site" | translate }} - {{ selectedSite.siteName }}
+      </span>
+      <button
+        mat-flat-button
+        color="secondary"
+        class="float-right"
+        (click)="cancelAddUpdate()"
+        type="button"
+      >
+        <span>{{ "Cancel" | translate }}</span>
+      </button>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="padding">
+    <mat-vertical-stepper [linear]="newSite" #stepper>
+      <mat-step
+        [stepControl]="informationForm.control"
+        label="{{ 'Site Information' | translate }}"
+      >
+        <form class="form" #informationForm="ngForm">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              placeholder="{{ 'Site Name' | translate }}"
+              id="siteName"
+              name="siteName"
+              [(ngModel)]="selectedSite.siteName"
+              required
+              [disabled]="!newSite"
+            />
+            <mat-error>{{ "Site name is required" | translate }}</mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-select
+              placeholder="Associated Url"
+              [(ngModel)]="selectedCompany"
+              name="company"
+            >
+              <mat-option *ngFor="let company of companies" [value]="company">
+                {{ company.url }} ({{ company.friendlyName }})
+              </mat-option>
+            </mat-select>
+            <mat-error>{{
+              "Associated URL is required" | translate
+            }}</mat-error>
+          </mat-form-field>
+          <div class="full-width margin-y">
+            <mat-slide-toggle
+              color="accent"
+              [(ngModel)]="selectedSite.isActive"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              Active
+            </mat-slide-toggle>
+          </div>
+          <div>
+            <button
+              mat-flat-button
+              type="button"
+              color="primary"
+              matStepperNext
+            >
+              {{ "Next Step" | translate }}
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="locationForm.control" label="Location">
+        <form class="form" #locationForm="ngForm">
+          <mat-form-field class="half-width">
+            <input
+              matInput
+              placeholder="{{ 'Default Latitude' | translate }}"
+              id="siteDefaultLatitude"
+              name="siteDefaultLatitude"
+              [(ngModel)]="selectedSite.siteDefaultLatitude"
+              required
+              [disabled]="showLocationSelectPanel"
+              type="number"
+            />
+            <mat-error>{{
+              "The default site latitude is required" | translate
+            }}</mat-error>
+          </mat-form-field>
+          <mat-form-field class="half-width">
+            <input
+              matInput
+              placeholder="{{ 'Default Longitude' | translate }}"
+              id="siteDefaultLongitude"
+              name="siteDefaultLongitude"
+              [(ngModel)]="selectedSite.siteDefaultLongitude"
+              required
+              [disabled]="showLocationSelectPanel"
+              type="number"
+            />
+            <mat-error>{{
+              "The default site longitude is required" | translate
+            }}</mat-error>
+          </mat-form-field>
+          <div class="full-width margin-bottom">
+            <mat-slide-toggle
+              color="accent"
+              [(ngModel)]="showLocationSelectPanel"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              Show Location Selection
+            </mat-slide-toggle>
+          </div>
+          <div *ngIf="showLocationSelectPanel" class="flex-container">
+            <loxam-location-select
+              class="flex-item"
+              (location)="setLocation($event)"
+            ></loxam-location-select>
+            <loxam-map
+              class="map flex-item"
+              *ngIf="locations.length > 0"
+              [locations]="locations"
+              [zoomOverride]="true"
+              [mapCenterLat]="defaultMapCenterLat"
+              [mapCenterLong]="defaultMapCenterLong"
+            ></loxam-map>
+          </div>
+          <div>
+            <button
+              mat-flat-button
+              type="button"
+              matStepperPrevious
+              class="margin-right"
+            >
+              {{ "Last Step" | translate }}
+            </button>
+            <button
+              mat-flat-button
+              color="primary"
+              matStepperNext
+              type="button"
+              [disabled]="
+                !(
+                  selectedSite.siteDefaultLatitude &&
+                  selectedSite.siteDefaultLongitude
+                )
+              "
+              (click)="showLocationSelectPanel = false"
+            >
+              {{ "Next Step" | translate }}
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="hoursForm.control">
+        <ng-template matStepLabel>{{ "Hours" | translate }}</ng-template>
+        <form class="form" #hoursForm="ngForm">
+          <mat-form-field>
+            <mat-select
+              placeholder="Timezone"
+              [(ngModel)]="selectedSite.siteTimeZone"
+              name="timezone"
+            >
+              <mat-option
+                *ngFor="let timezone of timezones"
+                [value]="timezone.value"
+              >
+                {{ timezone.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error>{{ "Timezone is required" | translate }}</mat-error>
+          </mat-form-field>
+
+          <table
+            mat-table
+            [dataSource]="hoursDataSource"
+            class="full-width"
+            *ngIf="hoursDataSource && hoursDataSource.data.length > 0"
+          >
+            <ng-container matColumnDef="isActive">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ "Active" | translate }}
+              </th>
+              <td mat-cell *matCellDef="let data">
+                <mat-slide-toggle
+                  color="accent"
+                  [(ngModel)]="data.isActive"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                </mat-slide-toggle>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="day">
+              <th mat-header-cell *matHeaderCellDef>{{ "Day" | translate }}</th>
+              <td mat-cell *matCellDef="let data">{{ data?.day.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="operatingStartDayTime">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ "Start Time" | translate }}
+              </th>
+              <td mat-cell *matCellDef="let data">
+                <mat-form-field class="full-width">
+                  <input
+                    matInput
+                    type="time"
+                    [(ngModel)]="data.operatingStartDayTime"
+                    [required]="data.isActive"
+                    [disabled]="!data.isActive"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                  <mat-error>
+                    {{ "Start time is required if day is active" | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="operatingEndDayTime">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ "End Time" | translate }}
+              </th>
+              <td mat-cell *matCellDef="let data">
+                <mat-form-field class="full-width">
+                  <input
+                    matInput
+                    type="time"
+                    [(ngModel)]="data.operatingEndDayTime"
+                    [required]="data.isActive"
+                    [disabled]="!data.isActive"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                  <mat-error>
+                    {{ "End time is required if day is active" | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="control">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let data; let i = index" class="right">
+                <button
+                  mat-icon-button
+                  color="accent"
+                  type="button"
+                  (click)="copyUp(i)"
+                  mat-Tooltip="Click to copy this day's time up a row"
+                  *ngIf="i !== 0"
+                >
+                  <mat-icon>arrow_drop_up</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="accent"
+                  type="button"
+                  (click)="copyDown(i)"
+                  mat-Tooltip="Click to copy this day's time down a row"
+                  *ngIf="i !== hoursDataSource.data.length - 1"
+                >
+                  <mat-icon>arrow_drop_down</mat-icon>
+                </button>
+                <div
+                  class="button-spacer"
+                  *ngIf="i === hoursDataSource.data.length - 1"
+                ></div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="hoursColumnsToDisplay"></tr>
+            <tr
+              mat-row
+              *matRowDef="let myRowData; columns: hoursColumnsToDisplay"
+            ></tr>
+          </table>
+
+          <div class="margin-top">
+            <button
+              mat-flat-button
+              type="button"
+              matStepperPrevious
+              class="margin-right"
+            >
+              {{ "Last Step" | translate }}
+            </button>
+            <button
+              mat-flat-button
+              type="button"
+              color="primary"
+              matStepperNext
+            >
+              {{ "Next Step" | translate }}
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="definitionForm.control">
+        <ng-template matStepLabel>{{ "Definition" | translate }}</ng-template>
+        <form class="form" #definitionForm="ngForm">
+          <mat-table
+            #definitionTable="matTable"
+            [dataSource]="definitionDataSource"
+            *ngIf="definitionDataSource && definitionDataSource.data.length > 0"
+          >
+            <ng-container cdkColumnDef="countryCode">
+              <mat-header-cell *cdkHeaderCellDef>
+                {{ "Country Code" | translate }}
+              </mat-header-cell>
+              <mat-cell *cdkCellDef="let data">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="data.countryCode"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="projectCode">
+              <mat-header-cell *cdkHeaderCellDef>
+                {{ "Project Code" | translate }}
+              </mat-header-cell>
+              <mat-cell *cdkCellDef="let data">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="data.projectCode"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="accountNumber">
+              <mat-header-cell *cdkHeaderCellDef>
+                {{ "Account Number" | translate }}
+              </mat-header-cell>
+              <mat-cell *cdkCellDef="let data">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="data.accountNumber"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="postCode">
+              <mat-header-cell *cdkHeaderCellDef>
+                {{ "Postcode" | translate }}
+              </mat-header-cell>
+              <mat-cell *cdkCellDef="let data">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="data.postCode"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="accountGroup">
+              <mat-header-cell *cdkHeaderCellDef>
+                {{ "Account Group" | translate }}
+              </mat-header-cell>
+              <mat-cell *cdkCellDef="let data">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="data.accountGroup"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+            <ng-container cdkColumnDef="projectGroup">
+              <mat-header-cell *cdkHeaderCellDef>
+                {{ "Project Group" | translate }}
+              </mat-header-cell>
+              <mat-cell *cdkCellDef="let data">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="data.projectGroup"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+            <ng-container cdkColumnDef="control">
+              <mat-header-cell *cdkHeaderCellDef>
+                <button
+                  mat-flat-button
+                  color="primary"
+                  type="button"
+                  (click)="addSiteDefinition()"
+                >
+                  {{ "Add" | translate }}
+                </button>
+              </mat-header-cell>
+              <mat-cell *cdkCellDef="let data; let i = index">
+                <button
+                  mat-icon-button
+                  color="accent"
+                  class="margin-right"
+                  type="button"
+                  (click)="removeSiteDefinition(i)"
+                >
+                  <mat-icon>remove</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="accent"
+                  type="button"
+                  (click)="viewSiteDefinition(data)"
+                >
+                  <mat-icon>settings</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row
+              *cdkHeaderRowDef="definitionColumnsToDisplay"
+            ></mat-header-row>
+            <mat-row
+              *cdkRowDef="let myRowData; columns: definitionColumnsToDisplay"
+            ></mat-row>
+          </mat-table>
+
+          <div class="margin-top">
+            <button
+              mat-flat-button
+              type="button"
+              matStepperPrevious
+              class="margin-right"
+            >
+              {{ "Last Step" | translate }}
+            </button>
+            <button
+              mat-flat-button
+              type="button"
+              color="primary"
+              matStepperNext
+            >
+              {{ "Next Step" | translate }}
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="confirmationForm.control">
+        <ng-template matStepLabel>{{ "Confirmation" | translate }}</ng-template>
+        <form class="form" #confirmationForm="ngForm" (ngSubmit)="saveSite()">
+          The details that you have entered above will now be submitted to the
+          database. If you do not wish to save your changes then please use the
+          cancel button in the top right hand corner of the page.
+
+          <div class="full-width margin-top">
+            <button
+              mat-flat-button
+              type="button"
+              matStepperPrevious
+              class="margin-right"
+            >
+              {{ "Last Step" | translate }}
+            </button>
+            <button
+              mat-flat-button
+              color="primary"
+              class="margin-right"
+              type="submit"
+            >
+              <span *ngIf="newSite">{{ "Save New Site" | translate }}</span>
+              <span *ngIf="!newSite">{{ "Save Changes" | translate }}</span>
+            </button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-vertical-stepper>
+  </mat-card-content>
+</mat-card>

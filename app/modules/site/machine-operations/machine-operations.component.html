@@ -1,0 +1,11 @@
+<loxam-page-control
+  (dateChanged)="refreshDateDependentData($event)"
+  [title]="'Machine Operations'"
+></loxam-page-control>
+
+<div class="flex-container">
+  <loxam-machine-operations-details-panel
+    [operations]="filteredMachineOperations"
+    class="full-width"
+  ></loxam-machine-operations-details-panel>
+</div>

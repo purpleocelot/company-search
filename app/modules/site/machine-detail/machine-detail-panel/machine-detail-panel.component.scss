@@ -1,0 +1,27 @@
+.two-column-list-cell {
+  margin-top: 0.8rem;
+  width: 50%;
+  display: inline-block;
+}
+
+mat-list-item {
+  padding: 1.6rem;
+  margin: 1.6rem;
+  width: 100%;
+}
+
+mat-card {
+  min-height: 10rem;
+}
+
+.untracked-label {
+  color: white;
+  background-color: #d86565;
+  border-radius: 0.4rem;
+  padding: 0.2rem 0.4rem;
+  margin-left: 1.6rem;
+  font-size: 1.2rem;
+  vertical-align: middle;
+  top: -0.4rem;
+  position: relative;
+}

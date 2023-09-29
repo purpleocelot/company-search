@@ -1,0 +1,9 @@
+.card-title-layout {
+  display: flex;
+  justify-content: space-between;
+
+  .layout-right {
+    max-width: 30rem;
+    text-align: right;
+  }
+}

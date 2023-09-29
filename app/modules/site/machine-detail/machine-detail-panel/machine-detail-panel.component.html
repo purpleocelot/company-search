@@ -1,0 +1,102 @@
+<mat-card class="padding margin-bottom">
+  <mat-card-header>
+    <mat-card-title>
+      {{ "Machine Details" | translate }}
+      <span
+        *ngIf="!tracked"
+        class="untracked-label"
+        matTooltip="{{
+          'This machine does not currently have a tracking device installed.'
+            | translate
+        }}"
+      >
+        {{ "Untracked" | translate }}
+      </span>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="padding">
+    <mat-list-item *ngIf="tracked">
+      <div class="two-column-list-cell">
+        {{ "Last Authenticated Event" | translate }}
+      </div>
+      <div class="two-column-list-cell">
+        {{
+          machineSummary.lastAuthenticationEventDateTime
+            | loxamDate: "shortDateTime"
+        }}
+      </div>
+    </mat-list-item>
+    <mat-divider *ngIf="tracked"></mat-divider>
+    <mat-list-item *ngIf="tracked">
+      <div class="two-column-list-cell">
+        {{ "Last Recorded Operator" | translate }}
+      </div>
+      <div
+        class="two-column-list-cell clickable"
+        routerLink="../../operator-detail/{{ machineSummary.operatorKey }}"
+      >
+        {{ machineSummary.operatorName }}
+      </div>
+    </mat-list-item>
+    <mat-divider *ngIf="tracked"></mat-divider>
+    <mat-list-item>
+      <div class="two-column-list-cell">{{ "Contractor" | translate }}</div>
+      <div class="two-column-list-cell">{{ machineSummary.accountName }}</div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <div class="two-column-list-cell">{{ "On Hire From" | translate }}</div>
+      <div class="two-column-list-cell">
+        {{ machineSummary.hireStartDate | loxamDate: "shortDate" }}
+      </div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <div class="two-column-list-cell">{{ "On Hire To" | translate }}</div>
+      <div class="two-column-list-cell">
+        {{ machineSummary.hireEndDate | loxamDate: "shortDate" }}
+      </div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <div class="two-column-list-cell">{{ "Hire Status" | translate }}</div>
+      <div class="two-column-list-cell">{{ machineSummary.hireStatus }}</div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item *ngIf="tracked">
+      <div class="two-column-list-cell">{{ "Battery Status" | translate }}</div>
+      <div class="two-column-list-cell">{{ machineSummary.batteryStatus }}</div>
+    </mat-list-item>
+    <mat-divider *ngIf="tracked"></mat-divider>
+    <mat-list-item *ngIf="tracked">
+      <div class="two-column-list-cell">
+        {{ "Battery Voltage" | translate }}
+      </div>
+      <div class="two-column-list-cell">
+        <span *ngIf="machineSummary.batteryLevel">
+          {{ machineSummary.batteryLevel }}
+        </span>
+        <span *ngIf="machineSummary.currentBatteryPercentage">
+          ({{ machineSummary.currentBatteryPercentage }}%)
+        </span>
+        <span
+          *ngIf="
+            !machineSummary.currentBatteryPercentage &&
+            !machineSummary.batteryLevel
+          "
+        >
+          Unknown
+        </span>
+      </div>
+    </mat-list-item>
+    <mat-divider *ngIf="tracked"></mat-divider>
+    <mat-list-item>
+      <div class="two-column-list-cell">
+        {{ "LOLER Expiration Date" | translate }}
+      </div>
+      <div class="two-column-list-cell">
+        {{ machineSummary.nextServiceDueDate | loxamDate: "shortDate" }}
+      </div>
+    </mat-list-item>
+  </mat-card-content>
+</mat-card>

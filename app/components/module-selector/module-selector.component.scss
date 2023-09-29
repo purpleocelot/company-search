@@ -1,0 +1,20 @@
+:host {
+  height: 100%;
+  width: 100%;
+  color: #fff;
+}
+
+.container {
+  min-width: 300px;
+  width: 60%;
+}
+
+.tile {
+  background: rgba(255, 255, 255, 0.3);
+  font-size: 2vw;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+}

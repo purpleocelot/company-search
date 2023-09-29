@@ -1,0 +1,15 @@
+<mat-toolbar color="accent">
+  <mat-toolbar-row>
+    <span class="company-name" routerLink="/">
+      <span class="logo"></span>
+    </span>
+    <span *ngIf="showBackLink" class="toolbar-spacer"></span>
+    <mat-icon
+      *ngIf="showBackLink"
+      class="toolbar-icon"
+      matTooltip="{{ 'Back' | translate }}"
+      (click)="back()"
+      >arrow_back</mat-icon
+    >
+  </mat-toolbar-row>
+</mat-toolbar>

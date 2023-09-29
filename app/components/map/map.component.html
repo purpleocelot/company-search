@@ -1,0 +1,22 @@
+<div>
+  <agm-map
+    [latitude]="mapCenterLat"
+    [longitude]="mapCenterLong"
+    [zoom]="zoom"
+    [gestureHandling]="'cooperative'"
+    [scrollwheel]="null"
+    *ngIf="locations"
+    [mapTypeControl]="true"
+    [streetViewControl]="false"
+    [usePanning]="true"
+  >
+    <agm-marker
+      *ngFor="let location of locations"
+      [title]="location.eCode + ' ' + location.itemDescription"
+      [latitude]="location.latitude"
+      [longitude]="location.longitude"
+      [iconUrl]="iconUrl"
+      (markerClick)="goToMachine(location)"
+    ></agm-marker>
+  </agm-map>
+</div>

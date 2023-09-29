@@ -1,0 +1,14 @@
+<div class="container">
+  <div
+    *ngFor="let alert of alerts"
+    class="item pointer item-{{ alerts.length }}"
+    [routerLink]="alert.link"
+  >
+    {{ alert.title | translate }}
+    <span
+      class="badge badge-alerts"
+      matBadge="{{ alert.value }}"
+      matBadgeColor="{{ alert.color }}"
+    ></span>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<mat-error *ngIf="errorMessage" class="form-error">
+  <div class="error-icon">
+    <mat-icon color="white" aria-label="warning">warning</mat-icon>
+  </div>
+  <div class="error-text">{{ errorMessage | translate }}</div>
+</mat-error>

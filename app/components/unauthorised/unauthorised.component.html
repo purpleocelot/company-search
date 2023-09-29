@@ -1,0 +1,18 @@
+<loxam-toolbar showBackLink="true"></loxam-toolbar>
+
+<div class="message">
+  <img src="../../../assets/images/unauthorised.png" /> <br />
+  {{ "You do not have permission to access this page" | translate }}
+
+  <div>
+    <button
+      mat-flat-button
+      color="primary"
+      *ngIf="reason === '401'"
+      routerLink="../login"
+      type="button"
+    >
+      {{ "Login" | translate }}
+    </button>
+  </div>
+</div>

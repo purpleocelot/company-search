@@ -1,0 +1,27 @@
+table {
+  width: 100%;
+  font-size: 2rem;
+}
+
+th {
+  font-size: 1.6rem;
+}
+
+td {
+  font-size: 1.8rem;
+}
+
+tr {
+  cursor: pointer;
+}
+
+tr:hover {
+  background-color: #e7e8e9;
+}
+
+.mat-header-cell:not(:first-child) {
+  text-align: center;
+}
+.mat-cell:not(:first-child) {
+  text-align: center;
+}

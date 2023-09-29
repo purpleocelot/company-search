@@ -1,0 +1,38 @@
+<mat-card class="margin-bottom">
+  <mat-card-header>
+    <mat-card-title> {{ "Operator Details" | translate }} </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="padding">
+    <mat-list-item>
+      <div class="two-column-list-cell">{{ "Contractor" | translate }}</div>
+      <div class="two-column-list-cell">{{ operatorSummary.companyName }}</div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <div class="two-column-list-cell">{{ "Last MEWP Used" | translate }}</div>
+      <div
+        *ngIf="operatorSummary?.lastMewpUsedECode"
+        class="two-column-list-cell clickable"
+        routerLink="../../machine-detail/{{
+          operatorSummary.lastMewpUsedMachineKey
+        }}"
+      >
+        {{ operatorSummary.lastMewpUsedECode }} -
+        {{ operatorSummary.lastMewpUsed }}
+      </div>
+      <div
+        *ngIf="!operatorSummary?.lastMewpUsedECode"
+        class="two-column-list-cell"
+      >
+        -
+      </div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <div class="two-column-list-cell">{{ "Last Accessed" | translate }}</div>
+      <div class="two-column-list-cell">
+        {{ operatorSummary.mostRecentLogin | loxamDate: "shortDateTime" }}
+      </div>
+    </mat-list-item>
+  </mat-card-content>
+</mat-card>

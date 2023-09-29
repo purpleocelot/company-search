@@ -1,0 +1,30 @@
+<loxam-page-control
+  (dateChanged)="refreshDateDependentData($event)"
+  [title]="'Site Utilisation'"
+></loxam-page-control>
+
+<div class="flex-container">
+  <loxam-utilisation-chart
+    class="flex-item"
+    [chartTitle]="'All MEWPS'"
+    [utilisationEvents]="filteredAll"
+  ></loxam-utilisation-chart>
+
+  <loxam-utilisation-chart
+    class="flex-item"
+    [chartTitle]="'Boom Lifts'"
+    [utilisationEvents]="filteredBoom"
+  ></loxam-utilisation-chart>
+
+  <loxam-utilisation-chart
+    class="flex-item"
+    [chartTitle]="'Scissor Lifts'"
+    [utilisationEvents]="filteredScissor"
+  ></loxam-utilisation-chart>
+
+  <loxam-utilisation-chart
+    class="flex-item"
+    [chartTitle]="'Other'"
+    [utilisationEvents]="filteredOther"
+  ></loxam-utilisation-chart>
+</div>

@@ -1,0 +1,31 @@
+<loxam-page-control
+  [title]="'Unsecured MEWPs'"
+  [showSlider]="anyUnsecuredMewpData"
+  (dateChanged)="refreshDateDependentData($event)"
+></loxam-page-control>
+
+<loxam-no-data-card
+  [showBadge]="true"
+  [title]="'Unsecured Machines'"
+  *ngIf="!anyUnsecuredMewpData"
+></loxam-no-data-card>
+
+<div class="flex-container" *ngIf="anyUnsecuredMewpData">
+  <loxam-static-chart
+    class="flex-item"
+    [chartTitle]="'Unsecured MEWPs'"
+    [events]="filteredUnsecuredMewpChart"
+  ></loxam-static-chart>
+
+  <loxam-map
+    class="map flex-item"
+    [locations]="unsecuredMachineLocations"
+    [mapCenterLat]="defaultMapCenterLat"
+    [mapCenterLong]="defaultMapCenterLong"
+  ></loxam-map>
+</div>
+
+<loxam-unsecured-mewp-table-panel
+  [unsecuredMewps]="filteredUnsecuredMewpAlerts"
+  class="block margin-top full-width"
+></loxam-unsecured-mewp-table-panel>

@@ -1,0 +1,11 @@
+<h1>{{ article.title | translate }}</h1>
+
+<div *ngIf="article.image" class="help-image">
+  <img
+    src="./assets/images/help/{{ article.image }}"
+    alt="{{ article.title | translate }} image"
+    class="full-width"
+  />
+</div>
+
+<div [innerHTML]="article.htmlContent | translate"></div>

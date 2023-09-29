@@ -1,0 +1,163 @@
+<mat-card class="margin-bottom">
+
+  <mat-card-header>
+    <mat-card-title *ngIf="newUser">
+      {{ "Add User" | translate }}
+    </mat-card-title>
+    <mat-card-title *ngIf="!newUser">
+      {{ "Edit User" | translate }} - {{ selectedUser.userName }}
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content class="padding">
+    <form (ngSubmit)="saveUser()" class="form">
+
+      <!-- Username -->
+      <mat-form-field class="full-width margin-y">
+        <input
+          matInput
+          placeholder="{{ 'Username' | translate }}"
+          id="username"
+          name="username"
+          [(ngModel)]="selectedUser.userName"
+          required
+          [disabled]="!newUser"
+          type="email"
+        />
+        <mat-error>{{ "Username is required" | translate }}</mat-error>
+      </mat-form-field>
+
+      <!-- company -->
+      <mat-form-field class="full-width margin-y">
+        <mat-select
+          placeholder="Company"
+          [(ngModel)]="selectedCompany"
+          name="company"
+          required="true"
+        >
+          <mat-option *ngFor="let company of companies" [value]="company">
+            {{ company.friendlyName }}
+          </mat-option>
+        </mat-select>
+        <mat-error>{{ "Company is required" | translate }}</mat-error>
+      </mat-form-field>
+
+      <!-- admin -->
+      <div class="full-width margin-y">
+        <mat-slide-toggle
+          color="accent"
+          [(ngModel)]="selectedUser.isAdmin"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          Admin User
+        </mat-slide-toggle>
+      </div>
+
+      <!-- Access all sites -->
+      <div class="full-width margin-y">
+        <mat-slide-toggle
+          *ngIf="!selectedUser.isAdmin"
+          [color]="accent"
+          [(ngModel)]="allSitesToggle"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          Access All Sites
+        </mat-slide-toggle>
+      </div>
+
+      <!-- sites -->
+      <mat-form-field
+        *ngIf="!selectedUser.isAdmin && !allSitesToggle"
+        class="full-width margin-y"
+      >
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="selectSiteFromAutocomplete($event)"
+        >
+          <mat-option
+            *ngFor="let filteredSite of (filteredSites | async)"
+            [value]="filteredSite"
+          >
+            {{ filteredSite.siteName }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-chip-list #siteSelectionList>
+          <mat-chip
+            *ngFor="let site of selectedSites"
+            [selectable]="selectable"
+            [removable]="true"
+            (removed)="removeSiteFromSelectedSites(site)"
+          >
+            {{ site.siteName }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input
+            class="full-width"
+            placeholder="Select Sites ... "
+            #siteSelectionInput
+            [formControl]="siteSelectionFormControl"
+            [matAutocomplete]="auto"
+            #autoTrigger="matAutocompleteTrigger"
+            [matChipInputFor]="siteSelectionList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="false"
+          />
+        </mat-chip-list>
+      </mat-form-field>
+      <div class="mat-error full-width" *ngIf="showSelectedSitesError">
+        <!-- Had to add custom error since the autocomplete with chips doesn't support required field -->
+        {{
+          "If a user is not an Admin and they don't have access to all sites
+        then at least one site must be selected."
+            | translate
+        }}
+      </div>
+
+      <!-- language -->
+      <mat-form-field class="full-width margin-y">
+          <mat-select
+            placeholder="Language"
+            [(ngModel)]="selectedUser.language"
+            name="language"
+            required="true">
+            <mat-option *ngFor="let language of languages" [value]="language.code">
+              {{ language.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error>{{ "Language is required" | translate }}</mat-error>
+        </mat-form-field>
+
+      <!-- send welcome email -->
+      <div class="full-width margin-y">
+        <mat-slide-toggle
+          *ngIf="newUser"
+          color="accent"
+          [(ngModel)]="selectedUser.sendEmail"
+          [ngModelOptions]="{ standalone: true }">
+          Send welcome email
+        </mat-slide-toggle>
+      </div>
+
+      <!-- buttons -->
+      <div class="full-width buttons-margin-top">
+        <button
+          mat-flat-button
+          color="primary"
+          class="margin-right"
+          type="submit"
+        >
+          <span *ngIf="newUser">{{ "Add" | translate }}</span>
+          <span *ngIf="!newUser">{{ "Save" | translate }}</span>
+        </button>
+        <button
+          mat-flat-button
+          color="secondary"
+          (click)="cancelAddUpdate()"
+          type="button"
+        >
+          <span>{{ "Cancel" | translate }}</span>
+        </button>
+      </div>
+    </form>
+  </mat-card-content></mat-card
+>

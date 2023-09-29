@@ -1,0 +1,31 @@
+<div class="full-width card-title-layout">
+  <div class="flex-item">
+    <span class="badge" matBadge="{{ dataSource.data.length }}"></span>
+    <ng-content></ng-content>
+  </div>
+  <div class="layout-right">
+    <mat-form-field
+      *ngIf="dataSource && dataSource.data.length > 1"
+      style="font-size: small;"
+      appearance="outline"
+    >
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        [(ngModel)]="filterText"
+        placeholder="{{ placeholderText | translate }}"
+      />
+      <button
+        mat-button
+        *ngIf="filterText"
+        matSuffix
+        type="button"
+        mat-icon-button
+        aria-label="Clear"
+        (click)="clearFilter()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</div>

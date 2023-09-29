@@ -1,0 +1,107 @@
+<mat-form-field
+  class="full-width"
+  *ngIf="dataSource && dataSource.data.length > 1"
+>
+  <input
+    matInput
+    (keyup)="applyFilter($event.target.value)"
+    placeholder="{{ 'Filter' | translate }}"
+  />
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" class="margin-bottom">
+  <ng-container matColumnDef="Site">
+    <th mat-header-cell *matHeaderCellDef>{{ "Site" | translate }}</th>
+    <td mat-cell *matCellDef="let data">{{ data?.siteName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Safety">
+    <th mat-header-cell *matHeaderCellDef>{{ "Safety" | translate }}</th>
+    <td mat-cell *matCellDef="let data" class="grid-text__danger">
+      {{ data?.siteAlertSummary?.skySirenAlertCount | replaceZeroWithDash }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Operational">
+    <th mat-header-cell *matHeaderCellDef>{{ "Operational" | translate }}</th>
+    <td mat-cell *matCellDef="let data" class="grid-text__warning">
+      {{
+        (data?.machineSiteAlertSummaries)[0]?.lowBatteryMachineCount +
+          (data?.machineSiteAlertSummaries)[0]?.multiLoginCount
+          | replaceZeroWithDash
+      }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Unsecured">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      matTooltip="Unsecured MEWPs from last night"
+    >
+      {{ "Unsecured" | translate }}
+    </th>
+    <td mat-cell *matCellDef="let data" class="grid-text__warning">
+      {{
+        (data?.machineSiteAlertSummaries)[0]?.unsecuredMachineCount
+          | replaceZeroWithDash
+      }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="MEWPs">
+    <th mat-header-cell *matHeaderCellDef>{{ "MEWPs" | translate }}</th>
+    <td mat-cell *matCellDef="let data">
+      {{ data?.totalMachineCount | replaceZeroWithDash }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Booms">
+    <th mat-header-cell *matHeaderCellDef>{{ "Booms" | translate }}</th>
+    <td mat-cell *matCellDef="let data">
+      {{ data?.boomMachineCount | replaceZeroWithDash }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Scissors">
+    <th mat-header-cell *matHeaderCellDef>{{ "Scissors" | translate }}</th>
+    <td mat-cell *matCellDef="let data">
+      {{ data?.scissorMachineCount | replaceZeroWithDash }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Other">
+    <th mat-header-cell *matHeaderCellDef>{{ "Other" | translate }}</th>
+    <td mat-cell *matCellDef="let data">
+      {{ data?.otherMachineCount | replaceZeroWithDash }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Untracked">
+    <th mat-header-cell *matHeaderCellDef>{{ "Untracked" | translate }}</th>
+    <td mat-cell *matCellDef="let data">
+      {{ data?.untrackedMachineCount | replaceZeroWithDash }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Contractors">
+    <th mat-header-cell *matHeaderCellDef>{{ "Contractors" | translate }}</th>
+    <td mat-cell *matCellDef="let data">
+      {{ data?.totalContractorCount | replaceZeroWithDash }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Operators">
+    <th mat-header-cell *matHeaderCellDef>{{ "Operators" | translate }}</th>
+    <td mat-cell *matCellDef="let data">
+      {{ data?.totalOperatorCount | replaceZeroWithDash }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr
+    mat-row
+    routerLink="{{ myRowData.siteId }}"
+    *matRowDef="let myRowData; columns: columnsToDisplay"
+  ></tr>
+</table>

@@ -1,0 +1,47 @@
+@import "../../../styles/variables.scss";
+
+.toolbar-icon {
+  padding: 0 1.4rem;
+  cursor: pointer;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.company-depot-selector,
+.module-selector {
+  background: $grey;
+  position: fixed;
+  top: 6.4rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ::ng-deep .mat-select,
+  ::ng-deep .mat-select-value-text,
+  ::ng-deep .mat-select-trigger,
+  ::ng-deep .mat-select-value,
+  ::ng-deep .mat-form-field-label,
+  ::ng-deep .mat-select-arrow,
+  ::ng-deep .mat-select-content {
+    color: white !important;
+  }
+
+  ::ng-deep .mat-form-field-underline,
+  ::ng-deep .mat-form-field-ripple {
+    background-color: white;
+  }
+}
+
+.menu-button {
+  width: 4rem;
+}
+
+.menu-divider {
+  opacity: 0.3;
+}

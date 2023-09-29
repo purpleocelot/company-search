@@ -1,0 +1,31 @@
+<loxam-page-control
+  [title]="'Safety Alerts'"
+  [showSlider]="anySafetyData"
+  (dateChanged)="refreshDateDependentData($event)"
+></loxam-page-control>
+
+<loxam-no-data-card
+  [showBadge]="true"
+  [title]="'Safety Alerts'"
+  *ngIf="!anySafetyData"
+></loxam-no-data-card>
+
+<div class="flex-container" *ngIf="anySafetyData">
+  <loxam-static-chart
+    class="flex-item margin-right"
+    [chartTitle]="'Safety Alerts'"
+    [events]="filteredSafetyChart"
+  ></loxam-static-chart>
+
+  <loxam-map
+    class="map inline-block flex-item"
+    [locations]="safetyAlertMachineLocations"
+    [mapCenterLat]="defaultMapCenterLat"
+    [mapCenterLong]="defaultMapCenterLong"
+  ></loxam-map>
+
+  <loxam-safety-alert-table-panel
+    [safetyAlerts]="filteredSafetyAlerts"
+    class="flex-item"
+  ></loxam-safety-alert-table-panel>
+</div>

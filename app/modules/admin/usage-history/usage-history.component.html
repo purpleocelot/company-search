@@ -1,0 +1,15 @@
+<loxam-page-control
+  [title]="pageTitle"
+  [showSlider]="false"
+></loxam-page-control>
+
+<loxam-usage-history-summary-panel
+  *ngIf="usage && !selectedUsageHistory"
+  (selectedSummary)="selectedSummaryCallback($event)"
+  [data]="usage"
+></loxam-usage-history-summary-panel>
+
+<loxam-usage-history-detail-panel
+  *ngIf="selectedUsageHistory"
+  [data]="selectedUsageHistory"
+></loxam-usage-history-detail-panel>

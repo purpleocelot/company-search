@@ -1,0 +1,16 @@
+<loxam-page-control
+  (dateChanged)="refreshDateDependentData($event)"
+  [title]="operatorSummary.operatorName"
+  [alerts]="alerts"
+>
+</loxam-page-control>
+<div class="flex-container double-margin-bottom">
+  <loxam-operator-detail-panel
+    [operatorSummary]="operatorSummary"
+    class="flex-item margin-bottom"
+  ></loxam-operator-detail-panel>
+  <loxam-operator-usage-panel
+    [usage]="filteredUsage"
+    class="flex-item margin-bottom"
+  ></loxam-operator-usage-panel>
+</div>

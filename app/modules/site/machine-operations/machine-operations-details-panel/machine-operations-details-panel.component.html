@@ -1,0 +1,132 @@
+<mat-card class="margin-bottom">
+  <mat-card-header>
+    <mat-card-title>
+      <span class="badge" matBadge="{{ dataSource.data.length }}"></span>
+      {{ "Machine Usage" | translate }}
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <span *ngIf="!(dataSource.data.length > 0)" class="no-data-text">
+      {{ "No data for this period" | translate }}
+    </span>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      *ngIf="dataSource.data.length > 0"
+    >
+      <ng-container matColumnDef="eCode">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "E-Code" | translate }}
+        </th>
+        <td
+          class="clickable"
+          mat-cell
+          *matCellDef="let data"
+          routerLink="../machine-detail/{{ data?.machineKey }}"
+        >
+          {{ data?.eCode }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="itemDescription">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Description" | translate }}
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let data"
+          routerLink="../machine-detail/{{ data?.machineKey }}"
+        >
+          {{ data?.itemDescription }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="contractor">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Contractor" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let data">{{ data?.contractor }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastOperator">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Last Operator" | translate }}
+        </th>
+        <td
+          class="clickable"
+          mat-cell
+          *matCellDef="let data"
+          routerLink="../operator-detail/{{ data?.lastOperatorKey }}"
+        >
+          {{ data?.lastOperator }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="usage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Usage" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let data">
+          {{ data?.usage | minutesToHoursAndMinutes }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastRecordedUse">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "Last Recorded Use" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let data">
+          {{ data?.lastRecordedUse | loxamDate: "shortDate" | unknownDate }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="days">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          matTooltip="Full days since last use"
+        >
+          {{ "Days" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let data">
+          {{ data?.days | replaceZeroWithDash }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nextService">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "LOLER Expiration" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let data">
+          <span>{{
+            data?.nextService | loxamDate: "shortDate" | unknownDate
+          }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="onHireUntil">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "On Hire Until" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let data">
+          <span>{{
+            data?.onHireUntil | loxamDate: "shortDate" | unknownDate
+          }}</span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+    </table>
+
+    <mat-paginator
+      *ngIf="dataSource.data.length > 0"
+      [length]="dataSource.data.length"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+    >
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>

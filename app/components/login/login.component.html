@@ -1,0 +1,54 @@
+<loxam-loader></loxam-loader>
+
+<loxam-toolbar></loxam-toolbar>
+
+<div class="container centered">
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="form">
+    <h1>{{ "Login" | translate }}</h1>
+    <div class="sub-heading">Sign in to your account</div>
+
+    <loxam-form-error [errorMessage]="errorMessage"></loxam-form-error>
+
+    <div>
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          placeholder="{{ 'Username' | translate }}"
+          id="username"
+          name="username"
+          [(ngModel)]="credentials.username"
+          required
+          type="email"
+        />
+        <mat-error>{{ "Username is required" | translate }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <loxam-password
+      class="full-width padding"
+      name="password"
+      placeholder="{{ 'Password' | translate }}"
+      [(ngModel)]="credentials.password"
+    >
+    </loxam-password>
+    <div class="padding-top">
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        class="margin-right"
+      >
+        {{ "Login" | translate }}
+      </button>
+
+      <button
+        mat-button
+        class="right"
+        routerLink="/forgot-password"
+        type="button"
+      >
+        {{ "Forgotten password" | translate }}
+      </button>
+    </div>
+  </form>
+</div>

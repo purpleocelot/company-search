@@ -1,0 +1,12 @@
+<loxam-page-control [title]="'Sites'" [showSlider]="false"></loxam-page-control>
+<loxam-site-list
+  *ngIf="!selectedSite"
+  [sites]="sites"
+  [selectedSite]="selectedSite"
+  (editingSite)="editingSite($event)"
+></loxam-site-list>
+<loxam-site-add-update
+  *ngIf="selectedSite"
+  [selectedSite]="selectedSite"
+  (stopSiteAddEdit)="siteAddEditStop($event)"
+></loxam-site-add-update>

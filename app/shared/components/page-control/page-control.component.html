@@ -1,0 +1,25 @@
+<div class="page-control-container">
+  <span class="title">{{ title | translate }}</span>
+  <span *ngIf="showSlider" class="secondary-text">
+    {{ "Date Range" | translate }}: {{ fromDate | loxamDate: "longDate" }} -
+    {{ toDate | loxamDate: "longDate" }}
+    <span *ngIf="dateOffset > 0">
+      ({{ dateOffset }} {{ "days" | translate }})
+    </span>
+    <span *ngIf="dateOffset === 0">({{ "Today" | translate }})</span>
+  </span>
+  <mat-slider
+    *ngIf="showSlider"
+    class="date-slider"
+    [invert]="true"
+    [max]="27"
+    [min]="0"
+    [step]="0.1"
+    [(ngModel)]="dateOffset"
+    (change)="refreshDateDependentData()"
+    (input)="sliderChanging($event)"
+  >
+  </mat-slider>
+</div>
+
+<loxam-alert-panel *ngIf="alerts" [alerts]="alerts"></loxam-alert-panel>
